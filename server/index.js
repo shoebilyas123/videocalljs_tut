@@ -24,4 +24,7 @@ io.on('connection', (socket) => {
 
     io.to(socket.id).emit('room:join', { email, room });
   });
+  socket.on('user:call', ({ to, offer }) => {
+    io.to(to).emit('incoming:call', { offer, from: socket.id });
+  });
 });
