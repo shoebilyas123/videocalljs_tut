@@ -27,4 +27,14 @@ io.on('connection', (socket) => {
   socket.on('user:call', ({ to, offer }) => {
     io.to(to).emit('incoming:call', { offer, from: socket.id });
   });
+  socket.on('call:accepted', ({ to, answer }) => {
+    console.log(to, answer);
+    io.to(to).emit('call:accepted', { from: socket.id, answer });
+  });
+  socket.on('peer:negotation:needed', ({ to, offer }) => {
+    io.to(to).emit('peer:negotiation:needed', { from: socket.id, offer });
+  });
+  socket.on('peer:nego:done', ({ to, ans }) => {
+    io.to(to).emit('peer:nego:final', { from: socket.id, ans });
+  });
 });
